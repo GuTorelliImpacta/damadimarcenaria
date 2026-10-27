@@ -1,0 +1,37 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run audit
+      - run: npm run build
+      - run: npm run check:bundle
+      - name: e2e + axe (WCAG 2.2 AA) + CSP
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+      - name: Lighthouse CI (mobile) — bloqueia abaixo das metas
+        run: |
+          nohup node scripts/serve.mjs >/dev/null 2>&1 &
+          sleep 2
+          npx --yes @lhci/cli@0.15.x autorun
+      - name: Placeholders (informativo até as fotos reais chegarem)
+        run: npm run check:placeholders
+        continue-on-error: true

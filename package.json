@@ -1,0 +1,67 @@
+{
+  "name": "damadi-marcenaria",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "images": "node scripts/images.mjs",
+    "dev": "npm run images && vite",
+    "build": "npm run images && vite-react-ssg build && node scripts/postbuild.mjs",
+    "build:prod": "npm run build && npm run check:placeholders && npm run check:bundle",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write src scripts tests",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check:placeholders": "node scripts/check-placeholders.mjs",
+    "check:bundle": "node scripts/check-bundle.mjs",
+    "brand": "node scripts/brand.mjs",
+    "audit": "npm audit --audit-level=high"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuTorelliImpacta/damadimarcenaria.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuTorelliImpacta/damadimarcenaria/issues"
+  },
+  "homepage": "https://github.com/GuTorelliImpacta/damadimarcenaria#readme",
+  "private": "true",
+  "type": "module",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
+    "vite-react-ssg": "^0.9.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.2.0",
+    "beasties": "^0.1.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^7.3.7",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

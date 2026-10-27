@@ -1,0 +1,254 @@
+@import 'tailwindcss';
+
+/* ---------- Fontes (self-host, subset latin, fallback com size-adjust p/ evitar CLS) ---------- */
+@font-face {
+  font-family: 'Sora';
+  src: url('/fonts/sora.woff2') format('woff2');
+  font-weight: 100 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sora Fallback';
+  src: local('Arial');
+  size-adjust: 107%;
+  ascent-override: 88%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.5%;
+  line-gap-override: 0%;
+}
+
+/* ---------- Tokens ---------- */
+@theme {
+  --font-display: 'Sora', 'Sora Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream-50: #fcfcf8;
+  --color-cream-100: #f4f4ec;
+  --color-cream-200: #e9e9dc;
+  --color-cream-300: #d9d9c5;
+  --color-cream-400: #c4c4a8;
+  --color-cream-500: #a9a98a;
+  --color-cream-600: #8a8a6c;
+  --color-cream-700: #6b6b53;
+  --color-cream-800: #4b4b3b;
+  --color-cream-900: #2f2f26;
+
+  --color-olive-50: #f3f3ec;
+  --color-olive-100: #e4e4d3;
+  --color-olive-200: #cbcba9;
+  --color-olive-300: #adad83;
+  --color-olive-400: #9a9a6f;
+  --color-olive-500: #8b8b5e;
+  --color-olive-600: #727249;
+  --color-olive-700: #5f5f3c;
+  --color-olive-800: #46462b;
+  --color-olive-900: #2e2e1c;
+
+  --color-copper-50: #fbf1e8;
+  --color-copper-100: #f5ddc7;
+  --color-copper-200: #ebbd91;
+  --color-copper-300: #de9858;
+  --color-copper-400: #cd7a2e;
+  --color-copper-500: #b8651b;
+  --color-copper-600: #9a5214;
+  --color-copper-700: #7d4210;
+  --color-copper-800: #5f320d;
+  --color-copper-900: #43230a;
+
+  --color-khaki-100: #efe9d3;
+  --color-khaki-200: #e2d9b4;
+  --color-khaki-300: #d2c58f;
+  --color-khaki-400: #c2b280;
+  --color-khaki-500: #a8985f;
+  --color-khaki-600: #877a49;
+
+  --color-ink-50: #f2efec;
+  --color-ink-100: #ddd7d1;
+  --color-ink-300: #9a8f85;
+  --color-ink-500: #5c4e44;
+  --color-ink-700: #3a2c23;
+  --color-ink-800: #2e221b;
+  --color-ink-900: #241a14;
+
+  --color-wa-500: #128c4a;
+  --color-wa-600: #0f7a40;
+  --color-wa-700: #0b6234;
+
+  --radius-card: 0.75rem;
+  --shadow-card: 0 1px 2px rgb(36 26 20 / 0.06), 0 8px 24px -12px rgb(36 26 20 / 0.18);
+  --breakpoint-xs: 22.5rem;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    overflow-x: clip;
+    @apply bg-cream-100 text-ink-900 font-sans antialiased;
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    line-height: 1.55;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-balance;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+    font-weight: 700;
+  }
+  h2 {
+    font-size: clamp(1.625rem, 1.25rem + 1.6vw, 2.5rem);
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-copper-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible,
+  .on-ink :focus-visible {
+    outline-color: var(--color-khaki-300);
+  }
+  summary {
+    cursor: pointer;
+  }
+}
+
+/* ---------- Elementos de marca ---------- */
+@layer components {
+  /* Ripado: ripas verticais, opacidade baixa, zero imagem */
+  .ripado {
+    position: relative;
+    isolation: isolate;
+  }
+  .ripado::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgb(36 26 20 / 0.055) 0 2px,
+      transparent 2px 22px
+    );
+  }
+  .on-dark.ripado::before,
+  .ripado.on-dark::before {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgb(244 244 236 / 0.07) 0 2px,
+      transparent 2px 22px
+    );
+  }
+  /* Colmeia (hexágonos dos flyers), ≤ 6% de opacidade */
+  .colmeia::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath d='M28 2l26 15v30L28 62 2 47V17zM28 64l26 15v19M28 64L2 79v19' fill='none' stroke='%23241a14' stroke-width='2'/%3E%3C/svg%3E");
+  }
+  .losango-clip {
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+  .corte-angular {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.25rem), 0 100%);
+  }
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-khaki-400), transparent);
+  }
+
+  /* Botões */
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 py-3 text-center font-semibold no-underline transition-colors duration-200;
+  }
+  .btn-primary {
+    @apply bg-copper-600 text-white hover:bg-copper-700 active:bg-copper-800;
+  }
+  .btn-wa {
+    @apply bg-wa-600 text-white hover:bg-wa-700 active:bg-wa-700;
+  }
+  .btn-outline {
+    @apply border-2 border-current bg-transparent hover:bg-ink-900/5;
+  }
+  .on-dark .btn-outline {
+    @apply hover:bg-white/10;
+  }
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .section {
+    @apply py-16 sm:py-20;
+  }
+
+  /* Reveal (aplicado só por JS depois da hidratação: sem JS tudo fica visível) */
+  [data-reveal='hide'] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  [data-reveal='show'] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 300ms ease-out,
+      transform 300ms ease-out;
+  }
+}
+
+.card-img img {
+  transition: transform 300ms ease-out;
+}
+.card:hover .card-img img {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .card:hover .card-img img {
+    transform: none;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(36 26 20 / 0.85);
+}
